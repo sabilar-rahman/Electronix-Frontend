@@ -1,54 +1,63 @@
+import { AlignJustify, ComputerIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
   return (
-    <div>
-      <header className="fixed-nav-bar w-nav">
-        {/* Navlinks here */}
-        <nav className="max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
-          <ul className="nav__links">
-            <li className="link">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="link">
-              <Link to="/shop">Shop</Link>
-            </li>
-            <li className="link">
-              <Link to="/">Pages</Link>
-            </li>
-            <li className="link">
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-
-          {/* NavTitle here  */}
-          <div className="nav__logo">
-            <Link to="/">
-              Electroni<span>x</span>
+    <div className="container mx-auto">
+      <header className="sticky top-0 w-full borer-b">
+        <div className="h-14 container flex items-center">
+          {/* desktop */}
+          <div className="hidden md:flex">
+            <Link to="\">
+              <ComputerIcon className="text-red-500" />
             </Link>
-          </div>
 
-          
-          {/* NavIcons here  */}
-          <div className="nav__icons relative">
-            <span>
-              <Link to="/search">
-                <i className="ri-search-line"></i>
-              </Link>
-            </span>
-            <span>
-              <button className="hover:text-primary">
-                <i className="ri-shopping-bag-line"></i>
-                <sup className="text-sm inline-block px-1.5 text-white rounded-full bg-primary text-center">
-                  0
-                </sup>
-              </button>
-            </span>
-            <span>
-              <i className="ri-user-2-line size-6 rounded-full cursor-pointer"></i>
-            </span>
+            <nav className="flex items-center gap-2 lg:gap-4 ml-2">
+              <Link to="/">Home</Link>
+              <Link to="/shop">Shop</Link>
+              <Link to="/pages">pages</Link>
+              <Link to="/contact">contact</Link>
+            </nav>
           </div>
-        </nav>
+          {/* mobile nav */}
+          <div className="md:hidden">
+
+            <Sheet>
+              <SheetTrigger>
+                <AlignJustify />
+              </SheetTrigger>
+              <SheetContent side="left">
+                <SheetHeader>
+
+                  <Link to="\">
+                    <ComputerIcon className="text-red-500" />
+                  </Link>
+
+                  <nav className="flex flex-col  gap-2 lg:gap-4 mt-5 ">
+                    <Link to="/">Home</Link>
+                    <Link to="/shop">Shop</Link>
+                    <Link to="/pages">pages</Link>
+                    <Link to="/contact">contact</Link>
+                  </nav>
+
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+          </div>
+          {/* desktop & mobile  */}
+           <h1 className="flex flex-1 items-center justify-end">
+            <Link to="/"> icon here</Link>
+          </h1> 
+        </div>
       </header>
     </div>
   );

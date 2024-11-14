@@ -4,7 +4,7 @@ const Banner = () => {
     return (
         <>
 
-        <Button variant="destructive">Shop Now</Button>
+        {/* <Button variant="destructive">Shop Now</Button> */}
       
       {/* <section className="section__container header__container">
         <div className="header__content z-30">
