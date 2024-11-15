@@ -1,10 +1,11 @@
-import Banner from "./Banner";
+import { Banner } from "./BannnerCarousel/Banner";
+
 
 const Home = () => {
   return (
-    <div>
-      <Banner />
-      
+    <div >
+      <Banner className="container mx-auto" />
+
     </div>
   );
 };

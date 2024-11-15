@@ -1,4 +1,4 @@
-import { AlignJustify, ComputerIcon } from "lucide-react";
+import { AlignJustify} from "lucide-react";
 import { Link } from "react-router-dom";
 
 import {
@@ -6,7 +6,7 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
+ 
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
