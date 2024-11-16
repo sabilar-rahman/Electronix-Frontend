@@ -1,26 +1,40 @@
 import { Link } from "react-router-dom";
-
+import motherboardImage from "../../../assets/categoriesPhoto/motherboard.png";
+import cpuImage from "../../../assets/categoriesPhoto/cpu.png";
+import gpuImage from "../../../assets/categoriesPhoto/gpu.png";
+import microphoneImage from "../../../assets/categoriesPhoto/microphone.png";
+import monitorImage from "../../../assets/categoriesPhoto/monitor.png";
+import ramImage from "../../../assets/categoriesPhoto/ram.png";
+import speakerImage from "../../../assets/categoriesPhoto/speaker.png";
+import ssdImage from "../../../assets/categoriesPhoto/ssd.png";
+import thermalPasteImage from "../../../assets/categoriesPhoto/thermalPaste.png";
 const Categories = () => {
 
-  const categories = [
-    { id: 1, name: "Motherboard", path: "motherboard", image: "../../../assets/categoriesPhoto/motherboard.png" },
-    { id: 2, name: "CPU", path: "cpu", image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 3, name: "GPU", path: 'gpu', image: "../../../assets/categoriesPhoto/gpu.png" },
-    { id: 4, name: "Microphone", path: 'microphone', image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 5, name: "Monitor", path: 'monitor', image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 6, name: "RAM", path: 'ram', image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 7, name: "Speaker", path: 'speaker', image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 8, name: "SSD", path: 'ssd', image: "../../../assets/categoriesPhoto/cpu.png" },
-    { id: 9, name: "Thermal Paste", path: 'thermal-paste', image: "../../../assets/categoriesPhoto/cpu.png" },
-    // { id: 10, name: "CPU",path:cpu ,image: "../../../assets/categoriesPhoto/cpu.png" },
 
+  const categories = [
+    {
+      id: 1,
+      name: "Motherboard",
+      path: "motherboard",
+      image: motherboardImage,
+    },
+    { id: 2, name: "CPU", path: "cpu", image: cpuImage },
+    { id: 3, name: "GPU", path: "gpu", image: gpuImage },
+    { id: 4, name: "Microphone", path: "microphone", image: microphoneImage },
+    { id: 5, name: "Monitor", path: "monitor", image: monitorImage },
+    { id: 6, name: "RAM", path: "ram", image: ramImage },
+    { id: 7, name: "Speaker", path: "speaker", image: speakerImage },
+    { id: 8, name: "SSD", path: "ssd", image: ssdImage },
+    {
+      id: 9,
+      name: "Thermal Paste",
+      path: "thermal-paste",
+      image: thermalPasteImage,
+    },
   ];
   return (
-
     <div className="container mx-auto">
-
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 p-4">
+      <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 p-2">
         {categories.map((category) => (
           <Link
             key={category.id}
@@ -32,7 +46,9 @@ const Categories = () => {
               alt={category.name}
               className="w-20 h-20 object-cover mb-3"
             />
-            <h2 className="text-lg font-semibold text-gray-800">{category.name}</h2>
+            <h2 className="text-lg font-semibold text-gray-800">
+              {category.name}
+            </h2>
           </Link>
         ))}
       </div>
