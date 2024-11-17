@@ -1,4 +1,4 @@
-import { AlignJustify} from "lucide-react";
+import { AlignJustify } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import {
@@ -6,7 +6,6 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
- 
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -28,7 +27,10 @@ const NavigationAction = () => {
                     <Link to="/shop">Shop</Link>
                     <Link to="/price">Pages</Link>
                     <Link to="/contact">Contact</Link>
-                    <Button variant="destructive">Sign In</Button>
+                    <Button variant="destructive">
+                      {" "}
+                      <Link to="/login">Login</Link>
+                    </Button>
                   </div>
                 </SheetDescription>
               </SheetHeader>
@@ -37,7 +39,9 @@ const NavigationAction = () => {
         </div>
 
         <div className="hidden md:flex md:space-x-4">
-          <Button variant="destructive">Sign In</Button>
+          <Button variant="destructive">
+            <Link to="/login">Login</Link>
+          </Button>
         </div>
       </div>
     </div>

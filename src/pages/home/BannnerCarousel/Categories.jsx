@@ -46,7 +46,7 @@ const Categories = () => {
               alt={category.name}
               className="w-20 h-20 object-cover mb-3"
             />
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-gray-800 hover:text-red-500  ">
               {category.name}
             </h2>
           </Link>
