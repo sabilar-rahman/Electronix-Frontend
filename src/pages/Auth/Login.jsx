@@ -1,7 +1,13 @@
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const {
     register,
     handleSubmit,
@@ -40,12 +46,25 @@ const Login = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
-              {...register("password", { required: "Password is required" })}
-              type="password"
-              placeholder="Enter your password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            />
+            <div className="relative">
+              <input
+                {...register("password", { required: "Password is required" })}
+                // type="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <span
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 "
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
+              </span>
+            </div>
             {errors.password && (
               <span className="text-red-500 text-sm">
                 {errors.password.message}
@@ -64,8 +83,11 @@ const Login = () => {
           </div>
         </form>
         <p className="text-center text-gray-500 text-sm mt-4">
-          Don't have an account?{" "}
-          <a href="/register" className="text-indigo-600 font-medium hover:underline">
+          Don't have an account?
+          <a
+            href="/register"
+            className="text-indigo-600 font-medium hover:underline"
+          >
             Sign up
           </a>
         </p>

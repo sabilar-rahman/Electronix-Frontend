@@ -1,7 +1,9 @@
-
+import  { useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -10,6 +12,10 @@ const Register = () => {
 
   const onSubmit = (data) => {
     console.log("Registration Data:", data);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -66,18 +72,30 @@ const Register = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
-              type="password"
-              placeholder="Enter your password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-            />
+            <div className="relative">
+              <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              />
+              <span
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
+              </span>
+            </div>
             {errors.password && (
               <span className="text-red-500 text-sm">
                 {errors.password.message}
