@@ -1,8 +1,23 @@
+import { useRegisterUserMutation } from "@/redux/featuresApi/auth/authApi";
 import  { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Register = () => {
+
+  const navigate = useNavigate();
+  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+
+  const [message, setMessage] = useState(null);
+
+
+
+
+
+
+
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -10,8 +25,20 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Registration Data:", data);
+  const onSubmit = async(data) => {
+     console.log("Registration Data:", data);
+
+    try {
+      await registerUser(data).unwrap();
+      toast.success('Congratulations! Registration successful');
+      navigate('/login');
+
+  
+      
+    } catch (error) {
+      setMessage(error.data.message);
+      
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -104,6 +131,12 @@ const Register = () => {
           </div>
 
           {/* Submit Button */}
+
+          {
+            message && (
+              <span className="text-red-500 text-sm">{message}</span>
+            )
+          }
           <div>
             <button
               type="submit"
