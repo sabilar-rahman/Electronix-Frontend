@@ -11,25 +11,41 @@ const NavigationBar = () => {
     <NavigationMenu>
       <NavigationMenuList className="hidden md:flex md:space-x-4">
         <NavigationMenuItem>
-          <Link href="/">
-            <NavigationMenuLink>Home</NavigationMenuLink>
-          </Link>
+
+          
+            <Link to="/">
+              Home
+            </Link>
+         
+
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/shop">
-            <NavigationMenuLink>Shop</NavigationMenuLink>
-          </Link>
+
+          
+            <Link to="/shop">
+              Shop
+            </Link>
+        
+
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/page">
-            <NavigationMenuLink>Page</NavigationMenuLink>
-          </Link>
+
+        
+            <Link to="/page">
+              Page
+            </Link>
+         
+
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <Link href="/contact">
-            <NavigationMenuLink>Contact</NavigationMenuLink>
-          </Link>
+          
+
+            <Link to="/contact">
+              Contact
+            </Link>
+
+         
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

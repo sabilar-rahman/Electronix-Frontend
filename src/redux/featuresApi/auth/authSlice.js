@@ -10,6 +10,11 @@ const loadUserFromLocalStorage = async () => {
     return { user: null };
   }
 };
+/**
+ * @function loadUserFromLocalStorage
+ * @description Load the user from the local storage
+ * @returns {Object} - the user from the local storage
+ */
 
 const initialState = loadUserFromLocalStorage();
 
@@ -21,26 +26,24 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       localStorage.setItem("user", JSON.stringify(state.user));
     },
+    /**
+     * @function setUser
+     * @description Set a user in the state and in the local storage
+     * @param {Object} state - the state of the application
+     * @param {Object} action - the action object with the user to set
+     */
+
     logout: (state) => {
       state.user = null;
       localStorage.removeItem("user");
     },
+    /**
+     * @function logout
+     * @description Remove the user from the state and from the local storage
+     * @param {Object} state - the state of the application
+     */
   },
 });
-
-/**
- * @function setUser
- * @description Set a user in the state and in the local storage
- * @param {Object} state - the state of the application
- * @param {Object} action - the action object with the user to set
- */
-/**
- * @function logout
- * @description Remove the user from the state and from the local storage
- * @param {Object} state - the state of the application
- */
-
-
 
 export const { setUser, logout } = authSlice.actions;
 
