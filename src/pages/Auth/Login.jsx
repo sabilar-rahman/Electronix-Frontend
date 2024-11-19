@@ -1,21 +1,18 @@
-
 import { useLoginUserMutation } from "@/redux/featuresApi/auth/authApi";
+import { setUser } from "@/redux/featuresApi/auth/authSlice";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 const Login = () => {
-
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const [message, setMessage] = useState(null);
-
-
-
-
-
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -32,22 +29,18 @@ const Login = () => {
     // console.log(data);
     try {
       const res = await loginUser(data).unwrap();
+      const { token, user } = res;
+      // console.log(res);
+      dispatch(setUser({ user }));
 
-      toast.success('Congratulations! Login successful');
-      console.log(res);
+      toast.success("Congratulations! Login successful");
       navigate("/");
-
-
     } catch (error) {
       setMessage(error.data.message);
-      toast.error('Login failed',error);
+      toast.error("Login failed", error);
       // console.log("login failed", error);
-
     }
-
-  }
-
-
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 flex justify-center items-center">
@@ -106,14 +99,7 @@ const Login = () => {
           </div>
 
           {/* Submit Button */}
-          {
-            message && (
-              <span className="text-red-500 text-sm">
-                {message}
-              </span>
-            )
-
-          }
+          {message && <span className="text-red-500 text-sm">{message}</span>}
           <div>
             <button
               type="submit"

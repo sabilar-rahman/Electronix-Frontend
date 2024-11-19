@@ -1,5 +1,5 @@
 import { AlignJustify } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import {
   Sheet,
@@ -9,8 +9,37 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const NavigationAction = () => {
+
+
+import { logout } from "@/redux/featuresApi/auth/authSlice";
+import { useLogoutUserMutation } from "@/redux/featuresApi/auth/authApi";
+
+
+
+
+
+const NavigationAction = ({ user, dispatch }) => {
+
+
+
+  const [logoutUser]= useLogoutUserMutation()
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout())
+      
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+
+  // console.log(user);
   return (
     <div>
       <div>
@@ -39,9 +68,24 @@ const NavigationAction = () => {
         </div>
 
         <div className="hidden md:flex md:space-x-4">
-          <Button variant="destructive">
-            <Link to="/login">Login</Link>
-          </Button>
+          {user ? (
+            <div className="flex items-center space-x-4">
+              {/* Display Avatar */}
+              <Avatar>
+                <AvatarImage src={user.profileImage} alt="Profile" />
+                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+
+              {/* Logout Button */}
+              <Button variant="destructive" onClick={() => handleLogout()}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button variant="destructive">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </div>
