@@ -22,3 +22,5 @@ export const store = configureStore({
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 setupListeners(store.dispatch)
 
+export const getRootState = store.getState;
+export const appDispatch = store.dispatch;
