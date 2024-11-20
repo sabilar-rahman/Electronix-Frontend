@@ -1,5 +1,5 @@
 import { AlignJustify } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Sheet,
@@ -31,8 +31,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
+
 const NavigationAction = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
   const userDropdown = [
@@ -87,6 +89,7 @@ const NavigationAction = () => {
       await logoutUser().unwrap();
       dispatch(logout());
       toast.success("Logout successful");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
