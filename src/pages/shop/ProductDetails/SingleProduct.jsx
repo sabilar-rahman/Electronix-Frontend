@@ -2,6 +2,8 @@ import { useGetProductByIdQuery } from "@/redux/featuresApi/products/productsApi
 import Loading from "@/utils/Loading";
 import { useParams } from "react-router-dom";
 import ReviewCard from "../Reviews/ReviewCard";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/featuresApi/cart/cartSlice";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -36,6 +38,14 @@ const SingleProduct = () => {
     color,
     author,
   } = product || {};
+
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+      dispatch(addToCart(product));
+
+  }
 
   return (
     <div className="container mx-auto p-5">
@@ -84,7 +94,10 @@ const SingleProduct = () => {
           <p className="text-gray-700 mb-6">{description}</p>
 
           {/* Add to Cart Button */}
-          <button className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition">
+          <button
+          onClick={() => handleAddToCart(product)}
+          
+          className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition">
             Add to Cart
           </button>
         </div>

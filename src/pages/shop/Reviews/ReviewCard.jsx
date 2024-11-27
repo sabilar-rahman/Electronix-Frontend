@@ -58,7 +58,7 @@ const ReviewCard = ({ productReviews }) => {
 
 
 <div className="mt-6">
-    <Button variant="ghost" onClick={handleOpenReviewModal}> Post Review</Button>
+    <Button variant="default" onClick={handleOpenReviewModal}> Post Review</Button>
 
 </div>
       <PostAReview

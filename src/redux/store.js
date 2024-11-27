@@ -5,8 +5,7 @@ import authApi from './featuresApi/auth/authApi'
 import authSlice from './featuresApi/auth/authSlice'
 import productsApi from './featuresApi/products/productsApi'
 import reviewsApi from './featuresApi/reviews/reviewsApi'
-
-
+import cartReducer from './featuresApi/cart/cartSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +14,8 @@ export const store = configureStore({
     auth: authSlice,
     [productsApi.reducerPath]: productsApi.reducer,
     [reviewsApi.reducerPath]: reviewsApi.reducer,
+
+    cart: cartReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.

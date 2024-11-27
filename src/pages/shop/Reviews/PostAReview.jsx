@@ -35,6 +35,11 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
       productId: id,
     };
 
+    if (!user) {
+      toast.error('Please log in to submit a review.');
+      return;
+    }
+
     try {
       const res = await postReview(newReview).unwrap();
       toast.success(res.message);
