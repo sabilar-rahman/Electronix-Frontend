@@ -6,6 +6,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
 const Login = () => {
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -22,24 +23,33 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue, // Add setValue to update form fields
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data);
     try {
       const res = await loginUser(data).unwrap();
       const { token, user } = res;
-      // console.log(res);
       dispatch(setUser({ user }));
 
       toast.success("Congratulations! Login successful");
       navigate("/");
     } catch (error) {
       setMessage(error.data.message);
-      toast.error("Login failed", error);
-      // console.log("login failed", error);
+      toast.error("Login failed");
     }
+  };
+
+  // Predefined demo credentials
+  const demoAdmin = { email: "admin@gmail.com", password: "123456" };
+  const demoUser = { email: "user@gmail.com", password: "123456" };
+
+  // Function to set demo credentials
+  const handleSetDemoCredentials = (type) => {
+    const credentials = type === "admin" ? demoAdmin : demoUser;
+    setValue("email", credentials.email);
+    setValue("password", credentials.password);
   };
 
   return (
@@ -48,6 +58,25 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Welcome to Electronix
         </h2>
+        <div className="flex justify-center gap-4 mb-4">
+          {/* Demo Admin Button */}
+          <button
+            type="button"
+            onClick={() => handleSetDemoCredentials("admin")}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+          >
+            Demo Admin
+          </button>
+
+          {/* Demo User Button */}
+          <button
+            type="button"
+            onClick={() => handleSetDemoCredentials("user")}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+          >
+            Demo User
+          </button>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email Input */}
           <div>
@@ -75,7 +104,6 @@ const Login = () => {
             <div className="relative">
               <input
                 {...register("password", { required: "Password is required" })}
-                // type="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
