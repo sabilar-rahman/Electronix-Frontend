@@ -4,13 +4,12 @@ import NavbarLogo from "./NavbarLogo";
 import NavigationBar from "./NavigationBar";
 import NavigationAction from "./NavigationAction";
 
-import { useDispatch, useSelector } from "react-redux";
+
 const Navbar = () => {
 
 
 //  const { user } = useSelector((state) => state.auth);
 //  console.log(user);
-
 
 
 

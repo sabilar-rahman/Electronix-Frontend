@@ -21,12 +21,9 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
+ 
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
+ 
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
@@ -147,12 +144,15 @@ const NavigationAction = () => {
 
         <div className="hidden md:flex md:space-x-4">
           <div className="flex items-center space-x-4 relative">
+
+
             <ShoppingCart className="w-5 h-5" />
             {product.length > 0 && (
               <span className="absolute top-0 -right-4  bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {product.length}
               </span>
             )}
+            
           </div>
           {user ? (
             <div className="flex items-center space-x-4 relative">

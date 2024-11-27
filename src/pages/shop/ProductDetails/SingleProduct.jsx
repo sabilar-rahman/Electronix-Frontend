@@ -7,6 +7,7 @@ import { addToCart } from "@/redux/featuresApi/cart/cartSlice";
 import { ShoppingCart } from "lucide-react";
 
 const SingleProduct = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProductByIdQuery(id);
 
@@ -25,9 +26,9 @@ const SingleProduct = () => {
   }
 
   const { product, reviews } = data || {};
-
+  
   console.log(data);
-
+  
   const {
     name,
     image,
@@ -39,9 +40,8 @@ const SingleProduct = () => {
     color,
     author,
   } = product || {};
+  
 
-
-  const dispatch = useDispatch();
 
   const handleAddToCart = (product) => {
       dispatch(addToCart(product));

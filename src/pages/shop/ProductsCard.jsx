@@ -1,7 +1,7 @@
 import { addToCart } from "@/redux/featuresApi/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { AlignJustify, ShoppingCart } from "lucide-react";
+import {  ShoppingCart } from "lucide-react";
 
 const ProductsCard = ({ products }) => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const ProductsCard = ({ products }) => {
       {products.length > 0 ? (
         products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="border rounded-lg shadow p-4 flex flex-col justify-between"
           >
             <div>
