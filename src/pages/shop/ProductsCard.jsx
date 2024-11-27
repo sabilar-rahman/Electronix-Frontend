@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ProductsCard = ({ products }) => {
   return (
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -13,9 +15,14 @@ const ProductsCard = ({ products }) => {
                           <h2 className="text-lg font-semibold">{product.name}</h2>
                           <p className="text-gray-600">{product.description}</p>
                           <p className="text-primary font-bold mt-2">${product.price}</p>
+
+                          <Link to={`/shop/${product._id}`}>
+                          
                           <button className="mt-4 w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
                               Add to Cart
                           </button>
+                          </Link>
+                          
                       </div>
                   </div>
               ))

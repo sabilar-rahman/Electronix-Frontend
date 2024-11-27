@@ -2,6 +2,7 @@ import { useGetAllProductsQuery } from "@/redux/featuresApi/products/productsApi
 import ProductsCard from "./ProductsCard";
 import { useState } from "react";
 import ShopFiltering from "./ShopFiltering";
+import Loading from "@/utils/Loading";
 
 const filters = {
     categories: ["All Products", "Motherboard", "CPU", "GPU", "Microphone", "Monitor", "RAM", "Speaker", "SSD", "Thermal Paste"],
@@ -59,7 +60,7 @@ const ShopPage = () => {
     //   console.log(productsData);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <Loading/>;
     }
 
     if (error) {
