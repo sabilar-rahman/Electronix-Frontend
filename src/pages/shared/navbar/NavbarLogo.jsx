@@ -1,9 +1,13 @@
+import { Link } from "react-router-dom";
 
 
 const NavbarLogo = () => {
     return (
         <div>
-            <h1>Electro<span className="text-lg text-red-500">nix</span></h1>
+            <Link to="/">
+
+                <h1 className="font-bold"><span className=" hover:text-red-500">Electro</span><span className="text-lg text-red-500 hover:text-black">nix</span></h1>
+            </Link>
         </div>
     );
 };

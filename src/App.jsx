@@ -8,9 +8,9 @@ function App() {
 
   return (
     <>
-      <div >
+      <div className='' >
 
-        <Navbar className='container mx-auto' />
+        <Navbar className=""/>
         <Outlet />
 
       </div>

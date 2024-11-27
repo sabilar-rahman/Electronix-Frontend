@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ReviewCard from "../Reviews/ReviewCard";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/featuresApi/cart/cartSlice";
+import { ShoppingCart } from "lucide-react";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -97,8 +98,9 @@ const SingleProduct = () => {
           <button
           onClick={() => handleAddToCart(product)}
           
-          className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition">
-            Add to Cart
+          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition flex items-center gap-2">
+           <ShoppingCart className="w-5 h-5" />
+           Add to Cart
           </button>
         </div>
       </div>

@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     // <div className="flex justify-between items-center border-b px-4 py-4  z-50 sticky top-0 container mx-auto  ">
-    <div className="flex justify-between items-center border-b border-white/20 bg-white/30 backdrop-blur-md px-4 py-4 z-50 sticky top-0 container mx-auto ">
+    <div className="flex justify-between items-center border-b border-gray-200 py-4 container mx-auto mb-2 ">
       <NavbarLogo />
       <NavigationBar />
       <NavigationAction />

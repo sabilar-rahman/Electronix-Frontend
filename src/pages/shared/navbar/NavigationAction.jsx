@@ -1,4 +1,4 @@
-import { AlignJustify } from "lucide-react";
+import { AlignJustify, ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -30,7 +30,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
-
 
 const NavigationAction = () => {
   const dispatch = useDispatch();
@@ -95,6 +94,9 @@ const NavigationAction = () => {
     }
   };
 
+  const product = useSelector((state) => state.cart.products);
+  console.log(product);
+
   // console.log(user);
   return (
     <div>
@@ -144,8 +146,16 @@ const NavigationAction = () => {
         </div>
 
         <div className="hidden md:flex md:space-x-4">
+          <div className="flex items-center space-x-4 relative">
+            <ShoppingCart className="w-5 h-5" />
+            {product.length > 0 && (
+              <span className="absolute top-0 -right-4  bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {product.length}
+              </span>
+            )}
+          </div>
           {user ? (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 relative">
               {/* Display Avatar */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
