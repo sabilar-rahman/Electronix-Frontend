@@ -52,6 +52,16 @@ const ShopPage = () => {
     if (error) {
         return <p>Error fetching products!</p>;
     }
+
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber >= 0 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        };
+    };
+
+
+
+
     const products = productsData?.products || [];
     const totalProducts = productsData?.totalProducts || 0;
     const totalPages = productsData?.totalPages || 0;
@@ -73,6 +83,27 @@ const ShopPage = () => {
                 <div>
                     <h1 className="text-xl font-medium">showing{startProducts} to {endProducts} of {totalProducts} products</h1>
                     <ProductsCard products={products} />
+
+                    {/* pagination */}
+                    <div className="mt-6 flex justify-center space-x-2">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200">Previous</button>
+                        {
+                            [...Array(totalPages)].map((_, index) => (
+                                <button onClick={() => handlePageChange(index + 1)}
+
+                                    className={`px-4 py-2 ${currentPage === index + 1 ? "bg-red-200" : "bg-gray-100"}`} key={index}> {index + 1}</button>
+                            ))
+                        }
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+
+                            disabled={currentPage === totalPages}
+
+                            className="px-4 py-2 bg-gray-200">Next</button>
+                    </div>
                 </div>
             </section>
         </div>
