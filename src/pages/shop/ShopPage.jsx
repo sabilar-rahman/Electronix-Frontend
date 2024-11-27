@@ -1,10 +1,11 @@
 import { useGetAllProductsQuery } from "@/redux/featuresApi/products/productsApi";
 import ProductsCard from "./ProductsCard";
 import { useState } from "react";
+import ShopFiltering from "./ShopFiltering";
 
 const filters = {
-    categories: ["all", "Motherboard", "CPU", "GPU", "Microphone", "Monitor", "RAM", "Speaker", "SSD", "Thermal Paste"],
-    colors: ["all", "black", "white"],
+    categories: ["All Products", "Motherboard", "CPU", "GPU", "Microphone", "Monitor", "RAM", "Speaker", "SSD", "Thermal Paste"],
+    colors: ["All Colors", "black", "white"],
     priceRanges: [
         { label: "under $100", min: 0, max: 100 },
         { label: "$100 - $200", min: 100, max: 200 },
@@ -21,12 +22,21 @@ const ShopPage = () => {
     const [productsPerPage] = useState(8);
 
     const [filterState, setFilterState] = useState({
-        category: "all",
-        color: "all",
+        category: "All Products",
+        color: "All Colors",
         priceRange: "",
     });
 
     const { category, color, priceRange } = filterState;
+
+
+    const clearFilters = () => {
+        setFilterState({
+            category: "All Products",
+            color: "All Colors",
+            priceRange: "",
+        });
+    };
 
     const [minPrice, maxPrice] = priceRange.split("-").map(Number);
 
@@ -36,8 +46,11 @@ const ShopPage = () => {
         isLoading,
         error,
     } = useGetAllProductsQuery({
-        category: category === "all" ? category : "",
-        color: color === "all" ? color : "",
+        // category: category === "all" ? category : "",
+        // color: color === "all" ? color : "",
+
+        category: category === "All Products" ? "" : category, // Fix applied here
+        color: color === "All Colors" ? "" : color,         // Fix for color filter too
         minPrice: isNaN(minPrice) ? '' : minPrice,
         maxPrice: isNaN(maxPrice) ? '' : maxPrice,
         page: currentPage,
@@ -76,16 +89,24 @@ const ShopPage = () => {
     return (
         <div className="container mx-auto">
             <section className="flex flex-col md:flex-row md:gap-12 gap-8">
-                <div >
-                    <h1>left</h1>
-                </div>
+                {/* catagories and filters */}
+
+                <ShopFiltering
+                    filters={filters}
+                    filterState={filterState}
+                    setFilterState={setFilterState}
+                    clearFilters={clearFilters}
+                />
+                {/* product page */}
 
                 <div>
                     <h1 className="text-xl font-medium">showing{startProducts} to {endProducts} of {totalProducts} products</h1>
                     <ProductsCard products={products} />
 
                     {/* pagination */}
-                    <div className="mt-6 flex justify-center space-x-2">
+
+                    {
+                        products.length > 0 &&  <div className="mt-6 flex justify-center space-x-2">
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === totalPages}
@@ -104,6 +125,8 @@ const ShopPage = () => {
 
                             className="px-4 py-2 bg-gray-200">Next</button>
                     </div>
+                    }
+                   
                 </div>
             </section>
         </div>
