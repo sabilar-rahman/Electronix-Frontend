@@ -26,7 +26,7 @@ const reviewsApi = createApi({
 
         postReview: builder.mutation({
             query: (reviewData) => ({
-                url: "/create-review",
+                url: "/post-review",
                 method: "POST",
                 body: reviewData,
                 credentials: "include",
