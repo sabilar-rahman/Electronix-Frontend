@@ -5,6 +5,7 @@ import ReviewCard from "../Reviews/ReviewCard";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/featuresApi/cart/cartSlice";
 import { ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const SingleProduct = () => {
 
   const handleAddToCart = (product) => {
       dispatch(addToCart(product));
+      // toast.success("Product added to cart");
 
   }
 

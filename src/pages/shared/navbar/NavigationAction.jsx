@@ -21,12 +21,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
- 
+
   DropdownMenuSeparator,
- 
+
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import CartItems from "@/pages/shop/Cart/CartItems";
+
 
 const NavigationAction = () => {
   const dispatch = useDispatch();
@@ -91,8 +93,8 @@ const NavigationAction = () => {
     }
   };
 
-  const product = useSelector((state) => state.cart.products);
-  console.log(product);
+  const products = useSelector((state) => state.cart.products);
+  // console.log(products);
 
   // console.log(user);
   return (
@@ -114,17 +116,17 @@ const NavigationAction = () => {
 
                     {user && user.role === "user"
                       ? userDropdown.map((item) => (
-                          <Link key={item.title} to={item.href}>
-                            {item.title}
-                          </Link>
-                        ))
+                        <Link key={item.title} to={item.href}>
+                          {item.title}
+                        </Link>
+                      ))
                       : user && user.role === "admin"
-                      ? adminDropdown.map((item) => (
+                        ? adminDropdown.map((item) => (
                           <Link key={item.title} to={item.href}>
                             {item.title}
                           </Link>
                         ))
-                      : null}
+                        : null}
 
                     {user ? (
                       <Button variant="destructive" onClick={handleLogout}>
@@ -144,16 +146,32 @@ const NavigationAction = () => {
 
         <div className="hidden md:flex md:space-x-4">
           <div className="flex items-center space-x-4 relative">
-
-
-            <ShoppingCart className="w-5 h-5" />
-            {product.length > 0 && (
-              <span className="absolute top-0 -right-4  bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                {product.length}
-              </span>
-            )}
-            
+            <Sheet>
+              <SheetTrigger>
+                <div >
+                  <ShoppingCart className="w-5 h-5" />
+                  {products.length > 0 && (
+                    <span className="absolute top-0 -right-4 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {products.length}
+                    </span>
+                  )}
+                </div>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <h2 className="text-lg font-bold">Your Cart</h2>
+                  <SheetDescription>
+                    {products.length > 0 ? (
+                      <CartItems products={products} />
+                    ) : (
+                      <p className="text-gray-500">Your cart is empty</p>
+                    )}
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
           </div>
+
           {user ? (
             <div className="flex items-center space-x-4 relative">
               {/* Display Avatar */}
@@ -173,15 +191,15 @@ const NavigationAction = () => {
                   <DropdownMenuGroup>
                     {user.role === "admin"
                       ? adminDropdown.map((item) => (
-                          <DropdownMenuItem key={item.title}>
-                            <Link to={item.href}>{item.title}</Link>
-                          </DropdownMenuItem>
-                        ))
+                        <DropdownMenuItem key={item.title}>
+                          <Link to={item.href}>{item.title}</Link>
+                        </DropdownMenuItem>
+                      ))
                       : userDropdown.map((item) => (
-                          <DropdownMenuItem key={item.title}>
-                            <Link to={item.href}>{item.title}</Link>
-                          </DropdownMenuItem>
-                        ))}
+                        <DropdownMenuItem key={item.title}>
+                          <Link to={item.href}>{item.title}</Link>
+                        </DropdownMenuItem>
+                      ))}
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
