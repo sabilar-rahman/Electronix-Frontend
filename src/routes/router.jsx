@@ -5,6 +5,7 @@ import ShopPage from "../pages/shop/ShopPage";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import SingleProduct from "@/pages/shop/ProductDetails/SingleProduct";
+import PaymentSuccess from "@/pages/shop/Payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/shop/:id",
         element: <SingleProduct />,
+      },
+      {
+        path: "/success",
+        element: <PaymentSuccess />,
       },
       {
         path: "/categories/:categoryName",
