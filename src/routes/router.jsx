@@ -7,6 +7,7 @@ import Register from "@/pages/Auth/Register";
 import SingleProduct from "@/pages/shop/ProductDetails/SingleProduct";
 import PaymentSuccess from "@/pages/shop/Payment/PaymentSuccess";
 import DashboardLayout from "@/pages/dashboard/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -48,26 +49,32 @@ const router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <DashboardLayout/>, //TODO: user private route 
-    children:[
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>, //TODO: user private route 
+    children: [
       //user routes status
 
-      {path: "",element: <div>user dashboard</div>},
-      {path: "orders",element: <div>user order</div>},
-      {path: "payments",element: <div>user payments</div>},
-      {path: "profile",element: <div>user profile</div>},
-      {path: "reviews",element: <div>user reviews</div>},
+      { path: "", element: <div>user dashboard</div> },
+      { path: "orders", element: <div>user order</div> },
+      { path: "payments", element: <div>user payments</div> },
+      { path: "profile", element: <div>user profile</div> },
+      { path: "reviews", element: <div>user reviews</div> },
 
       //admin routes status
-      {path: "admin",element: <div>admin main</div>}, 
-      {path: "add-new-post",element: <div>new post</div>}, 
-      {path: "manage-products",element: <div>manage main</div>}, 
-      {path: "update-product/:id",element: <div>update main</div>}, 
-      {path: "users",element: <div>users main</div>}, 
-      {path: "manage-orders",element: <div>manage orders main</div>}, 
+      { path: "admin", 
+        element: <PrivateRoute role="admin"> <div>admin main</div> </PrivateRoute> },
+      { path: "add-new-post", 
+        element: <PrivateRoute role="admin"> <div>new post</div> </PrivateRoute>  },
+      { path: "manage-products",
+         element: <PrivateRoute role="admin"> <div>manage main</div> </PrivateRoute>  },
+      { path: "update-product/:id",
+         element: <PrivateRoute role="admin"> <div>update main</div> </PrivateRoute>   },
+      { path: "users", 
+        element: <PrivateRoute role="admin"> <div>users main</div> </PrivateRoute>  },
+      { path: "manage-orders", 
+        element: <PrivateRoute role="admin"><div>manage orders main</div> </PrivateRoute>  },
     ]
   },
-],{
+], {
 
   future: {
     v7_startTransition: true,
@@ -76,7 +83,7 @@ const router = createBrowserRouter([
     v7_normalizeFormMethod: true,
     v7_partialHydration: true,
     v7_skipActionErrorRevalidation: true,
-    
+
   },
 
 }
