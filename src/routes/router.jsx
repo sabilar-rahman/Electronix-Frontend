@@ -6,6 +6,7 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import SingleProduct from "@/pages/shop/ProductDetails/SingleProduct";
 import PaymentSuccess from "@/pages/shop/Payment/PaymentSuccess";
+import DashboardLayout from "@/pages/dashboard/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,29 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  // dashboard routes status
+
+  {
+    path: "/dashboard",
+    element: <DashboardLayout/>, //TODO: user private route 
+    children:[
+      //user routes status
+
+      {path: "",element: <div>user dashboard</div>},
+      {path: "orders",element: <div>user order</div>},
+      {path: "payments",element: <div>user payments</div>},
+      {path: "profile",element: <div>user profile</div>},
+      {path: "reviews",element: <div>user reviews</div>},
+
+      //admin routes status
+      {path: "admin",element: <div>admin main</div>}, 
+      {path: "add-new-post",element: <div>new post</div>}, 
+      {path: "manage-products",element: <div>manage main</div>}, 
+      {path: "update-product/:id",element: <div>update main</div>}, 
+      {path: "users",element: <div>users main</div>}, 
+      {path: "manage-orders",element: <div>manage orders main</div>}, 
+    ]
   },
 ],{
 
