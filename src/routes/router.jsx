@@ -8,6 +8,7 @@ import SingleProduct from "@/pages/shop/ProductDetails/SingleProduct";
 import PaymentSuccess from "@/pages/shop/Payment/PaymentSuccess";
 import DashboardLayout from "@/pages/dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
+import UserDashMain from "@/pages/dashboard/user/dashboard/UserDashMain";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
     children: [
       //user routes status
 
-      { path: "", element: <div>user dashboard</div> },
+      { path: "", element: <UserDashMain /> },
       { path: "orders", element: <div>user order</div> },
       { path: "payments", element: <div>user payments</div> },
       { path: "profile", element: <div>user profile</div> },
