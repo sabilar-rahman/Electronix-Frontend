@@ -30,28 +30,29 @@ const OrderDetails = () => {
         return status === order.status;
       };
 
-    const steps = [
+      const steps = [
         {
           status: "pending",
           title: "Pending",
-          description: "Your payment is being processed",
+          description: "Your order has been received and is awaiting payment confirmation.",
         },
         {
           status: "processing",
           title: "Processing",
-          description: "Your payment is being processed",
+          description: "Your order is being prepared and packaged for shipment.",
         },
         {
           status: "shipped",
           title: "Shipped",
-          description: "Your payment is being processed",
+          description: "Your order has been shipped and is on its way to the destination.",
         },
         {
           status: "completed",
           title: "Completed",
-          description: "Your payment is being processed",
+          description: "Your order has been successfully delivered to your address.",
         },
       ];
+      
 
     return (
         <div className="container mx-auto">

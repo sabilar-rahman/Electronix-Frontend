@@ -10,7 +10,7 @@ const TimelineSteps = ({
   description,
   
 }) => {
-  const connectorClass = isCompleted ? "bg-primary" : "bg-gray-200";
+  const connectorClass = isCompleted ? "bg-primary" : "bg-gray-500";
   const circleClass = isCompleted
     ? "bg-primary text-white"
     : isCurrent
@@ -20,7 +20,7 @@ const TimelineSteps = ({
   const descriptionTextColor = isCompleted || isCurrent ? "text-primary" : "text-gray-500";
 
   return (
-    <li className="relative flex flex-col items-center sm:items-start sm:flex-row">
+    <li className="relative flex flex-col items-center sm:items-start sm:flex-row p-4">
       {/* Timeline Circle */}
       <div className="flex items-center z-10">
         <div
