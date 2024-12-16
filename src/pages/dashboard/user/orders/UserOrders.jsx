@@ -49,6 +49,7 @@ const UserOrders = () => {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">Invoice</TableHead>
+                        <TableHead>DB ID</TableHead>
                         <TableHead>Order ID</TableHead>
                         <TableHead>Date</TableHead>
                         <TableHead>Status</TableHead>
@@ -61,6 +62,7 @@ const UserOrders = () => {
                         <TableRow key={order._id}>
                             <TableCell className="font-medium">INV{index + 1}</TableCell>
                             <TableCell>{order?._id}</TableCell>
+                            <TableCell>{order?.orderId}</TableCell>
                             <TableCell>{format(new Date(order?.createdAt), "MM/dd/yyyy")}</TableCell>
                             <TableCell className={getStatusClass(order?.status)}>{order?.status}</TableCell>
                             <TableCell >${order?.amount}</TableCell>
