@@ -6,6 +6,7 @@ import authSlice from './featuresApi/auth/authSlice'
 import productsApi from './featuresApi/products/productsApi'
 import reviewsApi from './featuresApi/reviews/reviewsApi'
 import cartReducer from './featuresApi/cart/cartSlice'
+import statsApi from './featuresApi/stats/statsApi'
 
 export const store = configureStore({
   reducer: {
@@ -14,13 +15,14 @@ export const store = configureStore({
     auth: authSlice,
     [productsApi.reducerPath]: productsApi.reducer,
     [reviewsApi.reducerPath]: reviewsApi.reducer,
+    [statsApi.reducerPath]: statsApi.reducer,
 
     cart: cartReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware,productsApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware,productsApi.middleware ,statsApi.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
