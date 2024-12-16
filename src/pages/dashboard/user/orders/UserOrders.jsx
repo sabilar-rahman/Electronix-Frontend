@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const UserOrders = () => {
     const { user } = useSelector((state) => state.auth);
@@ -25,6 +26,20 @@ const UserOrders = () => {
 
     if (error) {
         return <h1>No orders</h1>;
+    }
+
+
+    const getStatusClass = (status) => {
+        switch (status) {
+            case "pending":
+                return "text-yellow-500";
+            case "completed":
+                return "text-green-500";
+            case "processing":
+                return "text-blue-500";
+            default:
+                return "text-gray-500";
+        }
     }
 
     return (
@@ -47,9 +62,10 @@ const UserOrders = () => {
                             <TableCell className="font-medium">INV{index + 1}</TableCell>
                             <TableCell>{order?._id}</TableCell>
                             <TableCell>{format(new Date(order?.createdAt), "MM/dd/yyyy")}</TableCell>
-                            <TableCell>{order?.status}</TableCell>
+                            <TableCell className={getStatusClass(order?.status)}>{order?.status}</TableCell>
                             <TableCell >${order?.amount}</TableCell>
-                            <TableCell className="text-right">View Order</TableCell>
+                            <TableCell className="text-right hover:text-red-500">
+                                <Link to={`/order/${order?._id}`}>View Order</Link></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
