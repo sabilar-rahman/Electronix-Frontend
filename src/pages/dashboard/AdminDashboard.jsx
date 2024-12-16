@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 const navItems = [
@@ -9,12 +10,13 @@ const navItems = [
   ];
 
 const AdminDashboard = () => {
+  const { user } = useSelector((state) => state.auth);
     return (
     <div className="space-y-6">
       {/* Branding Section */}
       <div className="text-center">
         <h1 className="text-2xl font-bold text-gray-700">Electronix</h1>
-        <p className="text-sm text-gray-500">User Dashboard</p>
+        <p className="text-sm text-gray-500">Hello,{user?.name} </p>
       </div>
 
       <hr className="border-gray-300" />
