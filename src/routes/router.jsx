@@ -12,6 +12,8 @@ import UserDashMain from "@/pages/dashboard/user/dashboard/UserDashMain";
 import UserOrders from "@/pages/dashboard/user/orders/UserOrders";
 import OrderDetails from "@/pages/dashboard/user/orders/OrderDetails";
 import UserPayments from "@/pages/dashboard/user/userpayments/UserPayments";
+import UserReviews from "@/pages/dashboard/user/userreviews/UserReviews";
+import UserProfile from "@/pages/dashboard/user/userprofile/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -64,8 +66,8 @@ const router = createBrowserRouter([
       { path: "", element: <UserDashMain /> },
       { path: "orders", element: <UserOrders/> },
       { path: "payments", element: <UserPayments/> },
-      { path: "profile", element: <div>user profile</div> },
-      { path: "reviews", element: <div>user reviews</div> },
+      { path: "reviews", element: <UserReviews/> },
+      { path: "profile", element: <UserProfile/> },
 
       //admin routes status
       { path: "admin", 
