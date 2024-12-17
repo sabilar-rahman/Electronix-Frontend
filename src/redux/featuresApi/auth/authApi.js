@@ -28,7 +28,7 @@ const authApi = createApi({
       }),
     }),
     editProfile: builder.mutation({
-      query: (id,profileData) => ({
+      query: ({id,profileData}) => ({
         url: `/edit-profile/${id}`,
         method: "PATCH",
         body: profileData,
