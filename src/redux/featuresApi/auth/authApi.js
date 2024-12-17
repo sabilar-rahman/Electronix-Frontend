@@ -7,6 +7,7 @@ const authApi = createApi({
     baseUrl: `${getBaseURL()}/api/auth`,
     credentials: "include",
   }),
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (newUser) => ({
@@ -29,12 +30,36 @@ const authApi = createApi({
       }),
     }),
     editProfile: builder.mutation({
-      query: ({id,profileData}) => ({
+      query: ({ id, profileData }) => ({
         url: `/edit-profile/${id}`,
         method: "PATCH",
         body: profileData,
       }),
     }),
+    getUsers: builder.query({
+      query: () => ({
+        url: "/users",
+        method: "GET",
+      }),
+      refetchOnMount: true,
+      invalidatesTags: ["Users"],
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/delete-users/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    updateUserRole: builder.mutation({
+      query: ({ id, role }) => ({
+        url: `/update-role/${id}`,
+        method: "PATCH",
+        body: role,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
   }),
 });
 
@@ -43,6 +68,9 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useEditProfileMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useUpdateUserRoleMutation
 } = authApi;
 
 export default authApi;
