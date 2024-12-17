@@ -55,7 +55,7 @@ const authApi = createApi({
       query: ({ id, role }) => ({
         url: `/update-role/${id}`,
         method: "PATCH",
-        body: role,
+        body: {role},
       }),
       invalidatesTags: ["Users"],
     }),
