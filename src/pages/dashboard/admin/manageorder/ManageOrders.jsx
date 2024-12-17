@@ -1,4 +1,8 @@
-import { useDeleteOrderByIdMutation, useGetAllOrdersQuery, useUpdateOrderStatusMutation } from '@/redux/featuresApi/orders/ordersApi';
+import {
+    useDeleteOrderByIdMutation,
+    useGetAllOrdersQuery,
+    useUpdateOrderStatusMutation,
+} from "@/redux/featuresApi/orders/ordersApi";
 
 import {
     Table,
@@ -9,39 +13,79 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from '@/components/ui/button';
-import Loading from '@/utils/Loading';
-import { toast } from 'sonner';
-import { format } from 'date-fns';
-import { useDispatch } from 'react-redux';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+import { Button } from "@/components/ui/button";
+import Loading from "@/utils/Loading";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { useState } from "react";
 
 const ManageOrders = () => {
-    const dispatch = useDispatch();
-    const { data, isLoading, isError } = useGetAllOrdersQuery();
-    const [updateOrderStatus, { isLoading: isUpdating }] = useUpdateOrderStatusMutation();
+    // const dispatch = useDispatch();
+    // another way to update status
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [newStatus, setNewStatus] = useState("");
 
-    const [deleteOrderById ,{refetch}] = useDeleteOrderByIdMutation();
+    const { data, isLoading} = useGetAllOrdersQuery();
+    const [updateOrderStatus] = useUpdateOrderStatusMutation();
+
+    const [deleteOrderById] = useDeleteOrderByIdMutation();
 
     const order = data?.orders;
 
     // console.log(order);
 
     if (isLoading) {
-        return <Loading />
+        return <Loading />;
     }
 
     const handleDeleteOrder = async (orderId) => {
         try {
             await deleteOrderById(orderId).unwrap();
-            refetch();
-            toast.success("Order deleted successfully.");           
+            toast.success("Order deleted successfully.");
+            // refetch();
         } catch (error) {
-            console.error(error);   
+            console.error(error);
         }
+    };
 
-    }
+    // const handleUpdateOrderStatus = async (orderId, status) => {
+    //     try {
+    //         await updateOrderStatus({ id: orderId, status }).unwrap();
+    //         toast.success("Order status updated successfully.");
+    //         refetch();
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
+    const handleUpdateOrderStatus = async () => {
+        if (!selectedOrder || !newStatus) return;
 
+        try {
+            await updateOrderStatus({
+                id: selectedOrder,
+                status: newStatus,
+            }).unwrap();
+            toast.success("Order status updated successfully.");
+            setSelectedOrder(null); // Close modal
+            setNewStatus("");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to update order status.");
+        }
+    };
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -58,13 +102,11 @@ const ManageOrders = () => {
 
     return (
         <div>
-
             <Table>
                 <TableCaption>A list of your User invoices.</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">ID</TableHead>
-
 
                         <TableHead>Email</TableHead>
                         <TableHead>Order Id</TableHead>
@@ -82,72 +124,120 @@ const ManageOrders = () => {
                             <TableCell>{order?.email}</TableCell>
                             <TableCell>{order?.orderId}</TableCell>
                             <TableCell>{order?.amount}</TableCell>
-                            <TableCell><span className={getStatusColor(order?.status)}>{order?.status}</span></TableCell>
-                            <TableCell> {format(new Date(order?.createdAt), "dd-MMM-yyyy")}</TableCell>
+                            <TableCell>
+                                <span className={getStatusColor(order?.status)}>
+                                    {order?.status}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                {" "}
+                                {format(new Date(order?.createdAt), "dd-MMM-yyyy")}
+                            </TableCell>
 
                             <TableCell className="flex gap-2">
-                                <Button variant="secondary">View</Button>
-                                <Button variant="outline">Status update</Button>
-                                <Button variant="destructive" onClick={() => handleDeleteOrder(order?._id)}>Delete</Button>
+                                {/* <Button variant="secondary">View</Button> */}
+                                {/* <Button variant="outline">
+                                    
+                                    
+                                    
+                                    
+                                    </Button> */}
+                                {/* Status Update */}
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => setSelectedOrder(order._id)}
+                                        >
+                                            Status Update
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Update Order Status</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Select the new status for the order.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
 
+                                        {/* Dropdown for Status */}
+                                        <div className="my-4">
+                                            <label className="block text-sm font-medium mb-2">
+                                                Order Status
+                                            </label>
+                                            <select
+                                                value={newStatus}
+                                                onChange={(e) => setNewStatus(e.target.value)}
+                                                className="w-full p-2 border rounded"
+                                            >
+                                                <option value="">Select Status</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="processing">Processing</option>
+                                                <option value="shipped">Shipped</option>
+                                                <option value="completed">Completed</option>
+                                            </select>
+                                        </div>
+
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel onClick={() => setSelectedOrder(null)}>
+                                                Cancel
+                                            </AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleUpdateOrderStatus}>
+                                                Save
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+
+                                {/* <Button variant="destructive" >
+
+
+                                    <AlertDialog>
+                                        <AlertDialogTrigger>Delete</AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action cannot be undone. This will permanently delete your account
+                                                    and remove your data from our servers.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={() => handleDeleteOrder(order?._id)}>Continue</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+
+                                </Button> */}
+
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="destructive">Delete</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This action cannot be undone. It will permanently delete
+                                                the order.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction
+                                                onClick={() => handleDeleteOrder(order._id)}
+                                            >
+                                                Delete
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </TableCell>
                         </TableRow>
                     ))}
-
-
                 </TableBody>
-
-
-                {/* <TableBody>
-                                {users?.map((user, index) => (
-                                    <TableRow key={user._id}>
-                                        <TableCell className="font-medium">ID-{index + 1}</TableCell>
-            
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>
-                                            <span className={setColorRole(user.role)}>{user.role}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            {format(new Date(user?.createdAt), "dd-MMM-yyyy")}
-                                        </TableCell>
-                                        <TableCell className="flex gap-2">
-                                            <select
-                                                value={selectedUserId === user._id ? selectedRole : user.role}
-                                                onChange={(e) => {
-                                                    setSelectedUserId(user._id); // Keep track of the user
-                                                    setSelectedRole(e.target.value); // Set the selected role
-                                                }}
-                                                className="select select-bordered"
-                                            >
-                                                <option value="user">User</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
-                                            <Button
-                                                className={` text-white ${selectedUserId === user._id
-                                                    ? "bg-gradient-to-r from-blue-500  to-purple-600  hover:via-blue-600 hover:to-purple-700"
-                                                    : "bg-gray-400 cursor-not-allowed"
-                                                    } px-4 py-2 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105`}
-                                                onClick={() => handleRoleChange(user._id, selectedRole)}
-                                                disabled={selectedUserId !== user._id}
-                                            >
-                                                Save
-                                            </Button>
-                                        </TableCell>
-            
-                                        <TableCell>
-                                            <Button
-                                                onClick={() => handleDeleteUser(user?._id)}
-                                                variant="destructive"
-                                            >
-                                                Delete
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody> */}
             </Table>
-
         </div>
     );
 };
